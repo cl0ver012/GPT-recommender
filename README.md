@@ -16,6 +16,8 @@ or
 yarn
 ```
 
+<br />
+
 Run the project in a local enviroment with:
 
 ```console
