@@ -14,7 +14,7 @@ const HomePage: React.FC = () => {
     const [finalResponse, setFinalResponse] = useState('')
 
     const composeRequestMessage = (subject: string, favs: string, quantity: string) => {
-        return `Based on the fact that i like ${subject} and my favourites are: ${favs}; Make a list of ${quantity} ${subject} that i could like and for each one specify the authors and the year of pubblication.`
+        return `Based on the fact that i like ${subject} and my favourites are: ${favs}; Make a list of ${quantity} ${subject} that i could like and for each one specify the authors and the year of pubblication. Sort the results from most to least compatible.`
     }
 
     const formatResponseMessage = (message: string) => {
