@@ -3,7 +3,9 @@
 
 *
   box-sizing: border-box
-  outline: none
+
+*:focus
+  outline: 2px solid $orange
 
 html,
 body
@@ -22,3 +24,68 @@ body
 
 code 
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace
+
+select
+  margin: 0 calc($small-space / 2)
+
+textarea
+  position: relative
+  width: 100%
+  height: 90px
+  max-width: 100%
+  max-height: 200px
+  padding: $small-space calc($small-space * 1.2)
+
+.u-input-row
+  position: relative
+  width: 100%
+  +flexbox(flex-start, center, row, nowrap)
+
+.u-button
+  cursor: pointer
+  appearance: none
+  border: none
+  padding: $small-space calc($small-space * 1.2)
+  border-radius: $main-border-radius
+  font-weight: bold
+  font-size: $main-text-size
+  letter-spacing: .5px
+
+.o-main-page-container
+  position: relative
+  width: 90%
+  max-width: 600px
+
+.o-main-actions-container
+  position: relative
+  width: 100%
+  +flexbox(space-between, center, row, nowrap)
+  margin: $small-space 0
+
+.o-action-button
+  background-color: $blue
+  color: $white
+  
+  &:hover
+    background-color: lighten($blue, 4%)
+
+  &:active
+    background-color: lighten($blue, 10%)
+
+.o-ghost-button
+  background-color: transparent
+  color: $black
+
+  &:hover
+    background-color: darken($white, 6%)
+
+  &:active
+    background-color: darken($white, 10%)
+
+.o-response-container
+  width: 100%
+  height: auto
+  padding: $small-space
+  background: transparent
+  border-radius: $main-border-radius * 2
+  border: 3px solid $divider-color
