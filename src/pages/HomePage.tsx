@@ -29,7 +29,7 @@ const HomePage: React.FC = () => {
             setLengthIssueText('')
             const message = composeRequestMessage(selectedSubject, favourites, selectedQuantity)
             const completionResponse = await sendCompletionRequest(userAPIKey, message)
-            if (completionResponse && completionResponse.error && completionResponse.error.status !== 200) {
+            if (completionResponse && completionResponse.error && completionResponse.error.response && completionResponse.error.response.status !== 200) {
                 switch (completionResponse.error.response.status) {
                     case 401: // Unauthorized: API key is wrong
                         throw new Error('It seems that your API key might be wrong, please double-check it.')
@@ -40,6 +40,7 @@ const HomePage: React.FC = () => {
                 }
             }
             if (completionResponse && completionResponse.response) {
+                if (!completionResponse.response.responseMessage) throw new Error('System was unable to satisfy your request, please retry.')
                 if (completionResponse.response.reason && completionResponse.response.reason === 'length')
                     setLengthIssueText(`This completion was interrupted because it was limited to ${MAX_TOKENS} characters.`)
                 setFinalResponse(formatResponseMessage(completionResponse.response.responseMessage))
