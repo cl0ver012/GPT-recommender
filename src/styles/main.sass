@@ -15,15 +15,23 @@ body
 body 
   position: relative
   margin: 0
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif
   -webkit-font-smoothing: antialiased
   -moz-osx-font-smoothing: grayscale
   color: $main-text-color
   background-color: $main-background-color
   font-size: $main-text-size
 
+body,
+textarea,
+button
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif
+
 code 
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace
+
+hr
+  margin: $medium-space 0
+  border: 1px solid $divider-color
 
 select
   margin: 0 calc($small-space / 2)
@@ -36,6 +44,7 @@ textarea
   max-height: 200px
   padding: $small-space calc($small-space * 1.2)
 
+
 .u-input-row
   position: relative
   width: 100%
@@ -45,7 +54,7 @@ textarea
   cursor: pointer
   appearance: none
   border: none
-  padding: $small-space calc($small-space * 1.2)
+  padding: $small-space calc($small-space * 1.4)
   border-radius: $main-border-radius
   font-weight: bold
   font-size: $main-text-size
@@ -55,12 +64,23 @@ textarea
   position: relative
   width: 90%
   max-width: 600px
+  padding: $large-space 0
+
+.o-api-key-input
+  flex: 1
+  margin-left: $small-space
+  padding: calc($small-space / 2)
 
 .o-main-actions-container
   position: relative
   width: 100%
   +flexbox(space-between, center, row, nowrap)
   margin: $small-space 0
+
+.o-loading-text
+  margin-left: $small-space
+  font-weight: bold
+  color: rgba($black, 0.4)
 
 .o-action-button
   background-color: $blue
@@ -72,6 +92,12 @@ textarea
   &:active
     background-color: lighten($blue, 10%)
 
+  &:disabled,
+  &:disabled:hover
+    background-color: $blue
+    cursor: not-allowed
+    opacity: .6
+
 .o-ghost-button
   background-color: transparent
   color: $black
@@ -82,6 +108,15 @@ textarea
   &:active
     background-color: darken($white, 10%)
 
+.o-error-text-container
+  font-weight: bold
+  letter-spacing: 0.6px
+  color: darken($red, 14%)
+  background: rgba($red, 0.16)
+  border: 1px solid $red
+  border-radius: $main-border-radius
+  padding: $small-space calc($small-space * 1.2)
+
 .o-response-container
   width: 100%
   height: auto
@@ -89,3 +124,8 @@ textarea
   background: transparent
   border-radius: $main-border-radius * 2
   border: 3px solid $divider-color
+
+.o-subtitle-info-text
+  font-size: $main-text-size * 0.8
+  letter-spacing: 0.6px
+  font-weight: 600
