@@ -1,0 +1,16 @@
+@import 'mixins'
+@import 'variables'
+
+.o-main-header
+    position: relative
+    width: 100%
+    padding: $small-space $medium-space
+    border-bottom: 1px solid $divider-color
+    +flexbox(space-between, center, row, nowrap)
+
+    > *
+        margin: 0
+
+    .o-version-tag
+        font-weight: bold
+        color: rgba($black, .6)
