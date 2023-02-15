@@ -13,22 +13,40 @@ const HomePage: React.FC = () => {
     const [favourites, setFavourites] = useState('Animal Farm by George Orwell, Odissey by Homer and Hamlet by William Shakespare')
     const [finalResponse, setFinalResponse] = useState('')
 
-    const composeRequestMessage = (subject: string, favs: string, quantity: string) => {
+    /**
+     * Returns the composed prompt text for the request.
+     * @param subject selected subject
+     * @param favs entered favourites
+     * @param quantity desired quantity
+     * @returns request prompt
+     */
+    const composeRequestMessage = (subject: string, favs: string, quantity: string): string => {
         return `Based on the fact that i like ${subject} and my favourites are: ${favs}; Make a list of ${quantity} ${subject} that i could like and for each one specify the authors and the year of pubblication. Sort the results from most to least compatible.`
     }
 
-    const formatResponseMessage = (message: string) => {
+    /**
+     * Removes the first two line breaks at the start of the response message
+     * if there are; otherwise it returns the same string.
+     * @param message string to check
+     * @returns cleaned string
+     */
+    const formatResponseMessage = (message: string): string => {
         if (message.startsWith('\n\n')) return message.slice(2)
         return message
     }
 
-    const sendRequest = async () => {
+    /**
+     * Sends the request to OpenAI completion API.
+     */
+    const sendRequest = async (): Promise<void> => {
         try {
             setIsLoading(true)
             setErrorMessage('')
             setLengthIssueText('')
             const message = composeRequestMessage(selectedSubject, favourites, selectedQuantity)
             const completionResponse = await sendCompletionRequest(userAPIKey, message)
+
+            // Error management
             if (completionResponse && completionResponse.error && completionResponse.error.response && completionResponse.error.response.status !== 200) {
                 switch (completionResponse.error.response.status) {
                     case 401: // Unauthorized: API key is wrong
@@ -39,6 +57,8 @@ const HomePage: React.FC = () => {
                         throw new Error('Something went wrong with the request, please retry.')
                 }
             }
+
+            // Success management
             if (completionResponse && completionResponse.response) {
                 if (!completionResponse.response.responseMessage) throw new Error('System was unable to satisfy your request, please retry.')
                 if (completionResponse.response.reason && completionResponse.response.reason === 'length')
