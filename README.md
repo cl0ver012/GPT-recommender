@@ -1,6 +1,6 @@
 # GPT Recommender
 
-![GPT Recommender](https://github.com/ChrisUser/GPT-recommender/blob/main/src/resources/images/screenshot.png?raw=true)
+![GPT Recommender](https://github.com/ChrisUser/GPT-recommender/blob/feature/implement-tests/src/resources/images/screenshot.png?raw=true)
 
 A books, movies, podcasts (and many other media) recommender system build with [Open AI API](https://openai.com/api/).
 
