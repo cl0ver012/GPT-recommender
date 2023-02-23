@@ -1,0 +1,30 @@
+name: CI
+on: [push]
+
+env:
+    NODE_VERSION: '16'
+
+jobs:
+    build-and-test:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Full-check repository
+              uses: actions/checkout@v3
+            - uses: actions/setup-node@v2.5.1
+              with:
+                  node-version: ${{ env.NODE_VERSION }}
+                  check-latest: true
+            - name: Install dependecies
+              run: |
+                  yarn install
+            - name: Build TypeScript
+              run: |
+                  yarn dist
+            - name: Build React
+              env:
+                  CI: false
+              run: |
+                  yarn build
+            - name: Run tests
+              run: |
+                  yarn test
