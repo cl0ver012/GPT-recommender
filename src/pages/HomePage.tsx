@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useMemo, useState } from 'react'
 import Header from '../components/Header'
 import { MAX_TOKENS, sendCompletionRequest } from '../resources/api-request'
 import { quantities, subjects } from '../utility/options'
@@ -12,6 +12,14 @@ const HomePage: React.FC = () => {
     const [selectedQuantity, setSelectedQuantity] = useState('5')
     const [favourites, setFavourites] = useState('Animal Farm by George Orwell, Odissey by Homer and Hamlet by William Shakespare')
     const [finalResponse, setFinalResponse] = useState('')
+
+    /**
+     * Checks for validity in user's entered data
+     * @returns flag that indicates that entered data is valid
+     */
+    const dataIsValid = useMemo((): boolean => {
+        return [userAPIKey, selectedSubject, selectedQuantity, favourites].every((element) => element !== '')
+    }, [userAPIKey, selectedSubject, selectedQuantity, favourites])
 
     /**
      * Returns the composed prompt text for the request.
@@ -113,7 +121,7 @@ const HomePage: React.FC = () => {
                 </div>
                 <div className="o-main-actions-container">
                     <div className="u-input-row">
-                        <button role="button" disabled={isLoading} className="u-button o-action-button" onClick={() => void sendRequest()}>
+                        <button role="button" disabled={isLoading || !dataIsValid} className="u-button o-action-button" onClick={() => void sendRequest()}>
                             Recommend me
                         </button>
                         {isLoading && <span className="o-loading-text">... loading</span>}
@@ -124,9 +132,17 @@ const HomePage: React.FC = () => {
                         </button>
                     )}
                 </div>
-                {errorMessage && <p className="o-error-text-container">{errorMessage}</p>}
+                {errorMessage && (
+                    <p data-testid="errorTextContainer" className="o-error-text-container">
+                        {errorMessage}
+                    </p>
+                )}
                 {finalResponse && <div className="o-response-container">{finalResponse}</div>}
-                {lengthIssueText && <p className="o-subtitle-info-text">{lengthIssueText}</p>}
+                {lengthIssueText && (
+                    <p data-testid="lengthIssueTextContainer" className="o-subtitle-info-text">
+                        {lengthIssueText}
+                    </p>
+                )}
             </div>
         </div>
     )
