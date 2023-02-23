@@ -1,12 +1,16 @@
 name: CI
-on: [push]
+
+on:
+    push:
+        branches: [main]
+    pull_request:
+        branches: [main]
 
 env:
     NODE_VERSION: '16'
 
 jobs:
-    build-and-test:
-        if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
+    full-code-check:
         runs-on: ubuntu-latest
         steps:
             - name: Full-check repository
