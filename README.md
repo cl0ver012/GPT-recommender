@@ -40,4 +40,4 @@ Choose a subject, list your favourites, select a quantity and generate a new lis
 
 ---
 
-Built with Open AI API GPT-3.
+Built with Open AI API GPT-3 and newest GPT-3.5.

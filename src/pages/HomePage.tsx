@@ -1,17 +1,22 @@
-import React, { useMemo, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import Header from '../components/Header'
 import { MAX_TOKENS, sendCompletionRequest } from '../resources/api-request'
-import { quantities, subjects } from '../utility/options'
+import { models, quantities, subjects } from '../utility/options'
 
 const HomePage: React.FC = () => {
     const [isLoading, setIsLoading] = useState(false)
     const [userAPIKey, setUserAPIKey] = useState('')
     const [errorMessage, setErrorMessage] = useState('')
     const [lengthIssueText, setLengthIssueText] = useState('')
+    const [selectedModel, setSelectedModel] = useState('')
     const [selectedSubject, setSelectedSubject] = useState('books')
     const [selectedQuantity, setSelectedQuantity] = useState('5')
     const [favourites, setFavourites] = useState('Animal Farm by George Orwell, Odissey by Homer and Hamlet by William Shakespare')
     const [finalResponse, setFinalResponse] = useState('')
+
+    useEffect(() => {
+        setSelectedModel(models[0])
+    }, [])
 
     /**
      * Checks for validity in user's entered data
@@ -52,7 +57,7 @@ const HomePage: React.FC = () => {
             setErrorMessage('')
             setLengthIssueText('')
             const message = composeRequestMessage(selectedSubject, favourites, selectedQuantity)
-            const completionResponse = await sendCompletionRequest(userAPIKey, message)
+            const completionResponse = await sendCompletionRequest(userAPIKey, message, selectedModel)
 
             // Error management
             if (completionResponse && completionResponse.error && completionResponse.error.response && completionResponse.error.response.status !== 200) {
@@ -94,6 +99,16 @@ const HomePage: React.FC = () => {
                         value={userAPIKey}
                         onChange={(e) => setUserAPIKey(e.target.value)}
                     />
+                </div>
+                <div className="u-input-row">
+                    <p>Choose a model to run:</p>{' '}
+                    <select role="combobox" value={selectedModel} onChange={(e) => setSelectedModel(e.target.value)}>
+                        {models.map((subject, index) => (
+                            <option key={index} value={subject}>
+                                {subject}
+                            </option>
+                        ))}
+                    </select>
                 </div>
                 <hr />
                 <div className="u-input-row">
